@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import { focusRouter } from "./controllers/focusController.js";
 
 dotenv.config();
 
@@ -15,3 +16,5 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);
 });
+
+app.use("/api/focus", focusRouter);
