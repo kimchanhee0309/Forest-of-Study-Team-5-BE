@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
-import { focusRouter } from "./controllers/focusController.js";
+import focusRouter from "./routes/focusRoute.js";
+import { studyRouter } from "./routes/studyRoute.js";
 
 dotenv.config();
 
@@ -18,3 +19,4 @@ app.listen(PORT, () => {
 });
 
 app.use("/api/focus", focusRouter);
+app.use("/api/studies", studyRouter);
