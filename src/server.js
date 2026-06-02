@@ -24,5 +24,5 @@ app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);
 });
 
-// app.use("/api/focus", focusRouter);
+app.use("/api/focus", focusRouter);
 app.use("/api/studies", studyRouter);
