@@ -4,6 +4,7 @@ import cors from "cors";
 
 import focusRouter from "./routes/focusRoute.js";
 import { studyRouter } from "./routes/studyRoute.js";
+import { updateRouter } from "./routes/updateRoute.js";
 import studyEmojiRouter from "./routes/emojiRoute.js";
 import studyDetailRouter from "./routes/studyDetailRoute.js";
 
@@ -26,3 +27,4 @@ app.listen(PORT, () => {
 
 app.use("/api/focus", focusRouter);
 app.use("/api/studies", studyRouter);
+app.use("/api/studies", updateRouter);
