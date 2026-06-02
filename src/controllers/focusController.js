@@ -22,7 +22,9 @@ export async function verifyStudy(req, res) {
   const { password } = req.body;
 
   if (!password) {
-    return res.status(400).json({ success: false, message: "비밀번호를 입력해 주세요." });
+    return res
+      .status(400)
+      .json({ success: false, message: "비밀번호를 입력해 주세요." });
   }
 
   const study = await prisma.study.findFirst({
@@ -31,14 +33,20 @@ export async function verifyStudy(req, res) {
   });
 
   if (!study) {
-    return res.status(404).json({ success: false, message: "스터디를 찾을 수 없습니다." });
+    return res
+      .status(404)
+      .json({ success: false, message: "스터디를 찾을 수 없습니다." });
   }
 
   if (study.password !== password) {
-    return res.status(401).json({ success: false, message: "비밀번호가 일치하지 않습니다." });
+    return res
+      .status(401)
+      .json({ success: false, message: "비밀번호가 일치하지 않습니다." });
   }
 
-  return res.status(200).json({ success: true, message: "비밀번호가 일치합니다." });
+  return res
+    .status(200)
+    .json({ success: true, message: "비밀번호가 일치합니다." });
 }
 
 // ============================================================
@@ -54,7 +62,9 @@ export async function getCurrentFocus(req, res) {
   });
 
   if (!study) {
-    return res.status(404).json({ success: false, message: "스터디를 찾을 수 없습니다." });
+    return res
+      .status(404)
+      .json({ success: false, message: "스터디를 찾을 수 없습니다." });
   }
 
   const session = await prisma.focusSession.findFirst({
@@ -83,7 +93,9 @@ export async function startFocus(req, res) {
   const { targetMinutes } = req.body;
 
   if (!targetMinutes) {
-    return res.status(400).json({ success: false, message: "targetMinutes는 필수입니다." });
+    return res
+      .status(400)
+      .json({ success: false, message: "targetMinutes는 필수입니다." });
   }
 
   const ongoing = await prisma.focusSession.findFirst({
@@ -94,7 +106,12 @@ export async function startFocus(req, res) {
   });
 
   if (ongoing) {
-    return res.status(409).json({ success: false, message: "이미 진행 중인 집중 세션이 있습니다." });
+    return res
+      .status(409)
+      .json({
+        success: false,
+        message: "이미 진행 중인 집중 세션이 있습니다.",
+      });
   }
 
   const session = await prisma.focusSession.create({
@@ -119,11 +136,18 @@ export async function pauseFocus(req, res) {
   const session = await prisma.focusSession.findUnique({ where: { id } });
 
   if (!session) {
-    return res.status(404).json({ success: false, message: "세션을 찾을 수 없습니다." });
+    return res
+      .status(404)
+      .json({ success: false, message: "세션을 찾을 수 없습니다." });
   }
 
   if (session.status !== "ongoing") {
-    return res.status(400).json({ success: false, message: "진행 중인 세션만 일시정지할 수 있습니다." });
+    return res
+      .status(400)
+      .json({
+        success: false,
+        message: "진행 중인 세션만 일시정지할 수 있습니다.",
+      });
   }
 
   const prevDuration = session.durationSeconds || 0;
@@ -149,11 +173,18 @@ export async function resumeFocus(req, res) {
   const session = await prisma.focusSession.findUnique({ where: { id } });
 
   if (!session) {
-    return res.status(404).json({ success: false, message: "세션을 찾을 수 없습니다." });
+    return res
+      .status(404)
+      .json({ success: false, message: "세션을 찾을 수 없습니다." });
   }
 
   if (session.status !== "paused") {
-    return res.status(400).json({ success: false, message: "일시정지된 세션만 재개할 수 있습니다." });
+    return res
+      .status(400)
+      .json({
+        success: false,
+        message: "일시정지된 세션만 재개할 수 있습니다.",
+      });
   }
 
   const updated = await prisma.focusSession.update({
@@ -174,11 +205,15 @@ export async function completeFocus(req, res) {
   const session = await prisma.focusSession.findUnique({ where: { id } });
 
   if (!session) {
-    return res.status(404).json({ success: false, message: "세션을 찾을 수 없습니다." });
+    return res
+      .status(404)
+      .json({ success: false, message: "세션을 찾을 수 없습니다." });
   }
 
   if (session.status === "completed") {
-    return res.status(400).json({ success: false, message: "이미 완료된 세션입니다." });
+    return res
+      .status(400)
+      .json({ success: false, message: "이미 완료된 세션입니다." });
   }
 
   const earned_point = calcPoint(session.targetMinutes);
