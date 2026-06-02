@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
-import { focusRouter } from "./controllers/focusController.js";
+import focusRouter from "./routes/focusRoute.js";
 import { studyRouter } from "./routes/studyRoute.js";
 import studyEmojiRouter from "./routes/emojiRoute.js";
 
