@@ -1,0 +1,4 @@
+@baseUrl = http://localhost:3000
+
+###스터디 목록 테스트
+GET {{baseUrl}}/studies
