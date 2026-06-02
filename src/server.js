@@ -1,9 +1,11 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+
 import focusRouter from "./routes/focusRoute.js";
 import { studyRouter } from "./routes/studyRoute.js";
 import studyEmojiRouter from "./routes/emojiRoute.js";
+import studyDetailRouter from "./routes/studyDetailRoute.js";
 
 dotenv.config();
 
@@ -15,6 +17,7 @@ app.get("/", (req, res) => {
   res.json({ message: "Todo API Server" });
 });
 
+app.use(studyDetailRouter);
 app.use(studyEmojiRouter);
 
 app.listen(PORT, () => {
