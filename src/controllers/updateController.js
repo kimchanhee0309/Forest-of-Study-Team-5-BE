@@ -20,7 +20,7 @@ export const updateStudy = async (req, res) => {
     updateStudyBodySchema.parse(req.body);
 
   const study = await prisma.study.findUnique({
-    where: { id: studyID },
+    where: { id: studyId },
   });
 
   if (!study || study.isDeleted) {
