@@ -54,6 +54,6 @@ export const updateStudy = async (req, res) => {
   return res.status(200).json({
     success: true,
     message: "스터디가 수정되었습니다.",
-    data: updatedStudy,
+    data: updateStudy,
   });
 };
