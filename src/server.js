@@ -8,6 +8,7 @@ import { updateRouter } from "./routes/updateRoute.js";
 import studyEmojiRouter from "./routes/emojiRoute.js";
 import studyDetailRouter from "./routes/studyDetailRoute.js";
 import habitRouter from "./routes/habitRoute.js";
+import studyListRouter from "./routes/studyListRoute.js";
 dotenv.config();
 
 const app = express();
@@ -15,17 +16,18 @@ const PORT = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 app.get("/", (req, res) => {
-   res.json({ message: "Todo API Server" });
+  res.send("서버 작동중!!");
 });
 
 app.use(studyDetailRouter);
 app.use(studyEmojiRouter);
 
-app.use("/api/focus", focusRouter);
-app.use("/api/studies", studyRouter);
-app.use("/api", habitRouter);
+app.use("/focus", focusRouter);
+app.use("/studies", studyRouter);
+app.use("/", habitRouter);
+app.use("/studies", studyListRouter);
+app.use("/studies", updateRouter);
 
 app.listen(PORT, () => {
-   console.log(`Server running on port: ${PORT}`);
+  console.log(`Server running on port: ${PORT}`);
 });
-app.use("/api/studies", updateRouter);

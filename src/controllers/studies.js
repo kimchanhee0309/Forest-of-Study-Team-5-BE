@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import asyncHandler from "../utils/asyncHandler.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 import dayjs from "dayjs";
 
 const prisma = new PrismaClient();
@@ -67,11 +67,9 @@ export const getStudies = asyncHandler(async (req, res) => {
     };
   });
 
-  res
-    .status(200)
-    .json({
-      message: "스터디 목록 조회 성공",
-      data: studiesWithElapsedDays,
-      totalCount,
-    });
+  res.status(200).json({
+    message: "스터디 목록 조회 성공",
+    data: studiesWithElapsedDays,
+    totalCount,
+  });
 });
