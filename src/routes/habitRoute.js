@@ -8,7 +8,7 @@ import {
    endHabit,
    getWeeklyHabitLogs,
 } from "../controllers/habitController.js";
-import asyncHandler from "../utils/asyncHandler.js"; //  에러 핸들러 유틸 가져오기
+import { asyncHandler } from "../utils/asyncHandler.js"; //  에러 핸들러 유틸 가져오기
 
 const router = express.Router();
 
