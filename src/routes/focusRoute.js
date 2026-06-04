@@ -1,7 +1,7 @@
 // focusRoute.js — 오늘의 집중 라우터
 // 경로 등록만 담당, 비즈니스 로직은 컨트롤러/서비스에서 처리
 import express from "express";
-import asyncHandler from "../utils/asyncHandler.js";
+import { asyncHandler } from "../utils/asyncHandler.js";
 import {
   verifyStudy,
   getCurrentFocus,
