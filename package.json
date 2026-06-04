@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
+    "dev": "nodemon src/server.js",
+    "seed": "node prisma/seed.js"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +14,8 @@
   "type": "module",
   "dependencies": {
     "@prisma/client": "^6.19.3",
+    "cors": "^2.8.6",
+    "dayjs": "^1.11.21",
     "express": "^5.2.1"
   },
   "devDependencies": {
