@@ -92,7 +92,7 @@ export async function startFocus(req, res) {
   const studyId = Number(req.params.studyId);
   const { targetMinutes } = req.body;
 
-  if (!targetMinutes) {
+  if (targetMinutes === undefined || targetMinutes === null) {
     return res
       .status(400)
       .json({ success: false, message: "targetMinutes는 필수입니다." });
