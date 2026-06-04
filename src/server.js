@@ -1,6 +1,5 @@
 import express from "express";
 import dotenv from "dotenv";
-import cors from "cors";
 
 dotenv.config();
 
@@ -9,8 +8,8 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-app.get("/studies", (req, res) => {
-  res.json({ message: "MainHome API Server" });
+app.get("/", (req, res) => {
+  res.json({ message: "Todo API Server" });
 });
 
 app.listen(PORT, () => {
