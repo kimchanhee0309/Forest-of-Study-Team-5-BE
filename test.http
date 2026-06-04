@@ -1,0 +1,2 @@
+### 스터디 조회
+GET http://localhost:3000/studies/1
