@@ -1,0 +1,106 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum FocusStatus {
+  ongoing
+  paused
+  completed
+}
+
+// 1. 스터디
+model Study {
+  id          Int      @id @default(autoincrement())
+  nickname    String   @db.VarChar(30)
+  title       String   @db.VarChar(50)
+  description String?  @db.Text
+  background  String   @db.Text
+  password    String   @db.VarChar(100)
+  totalPoint  Int      @default(0)
+  isDeleted   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // 관계
+  habits        Habit[]
+  focusSessions FocusSession[]
+  studyEmojis   StudyEmoji[]
+
+  @@map("studies")
+}
+
+// 2. 습관
+model Habit {
+  id         Int       @id @default(autoincrement())
+  studyId    Int
+  title      String    @db.VarChar(100)
+  orderIndex Int       @default(0)
+  startDate  DateTime  @default(now()) @db.Date
+  endDate    DateTime? @db.Date
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  study     Study      @relation(fields: [studyId], references: [id], onDelete: Cascade)
+  habitLogs HabitLog[]
+
+  @@map("habits")
+}
+
+// 3. 습관 체크 기록
+// 규칙 1: 매주 월요일 00:00에 일주일치 미리 생성
+//         isChecked = false 로 생성 → 체크 시 true 로 업데이트
+
+model HabitLog {
+  id          Int      @id @default(autoincrement())
+  habitId     Int
+  checkedDate DateTime @db.Date // 해당 날짜
+  isChecked   Boolean  @default(false) // 체크 여부
+  createdAt   DateTime @default(now())
+
+  habit Habit @relation(fields: [habitId], references: [id], onDelete: Cascade)
+
+  // 하루에 한 번만
+  @@unique([habitId, checkedDate])
+  @@map("habit_logs")
+}
+
+// 4. 집중 세션
+model FocusSession {
+  id              Int         @id @default(autoincrement())
+  studyId         Int
+  startedAt       DateTime    @default(now())
+  endedAt         DateTime?
+  targetMinutes   Int
+  durationSeconds Int?
+  earnedPoint     Int         @default(0)
+  status          FocusStatus @default(ongoing) // enum 사용으로 오타 방지
+
+  study Study @relation(fields: [studyId], references: [id], onDelete: Cascade)
+
+  @@map("focus_sessions")
+}
+
+// 5. 응원 이모지 (스터디별 이모지 종류당 카운트)
+model StudyEmoji {
+  id      Int    @id @default(autoincrement())
+  studyId Int
+  emoji   String @db.VarChar(10)
+  count   Int    @default(1)
+
+  study Study @relation(fields: [studyId], references: [id], onDelete: Cascade)
+
+  // 스터디당 이모지 종류는 1행으로 관리
+  @@unique([studyId, emoji])
+  @@map("study_emojis")
+}
