@@ -9,11 +9,13 @@ import studyEmojiRouter from "./routes/emojiRoute.js";
 import studyDetailRouter from "./routes/studyDetailRoute.js";
 import habitRouter from "./routes/habitRoute.js";
 import studyListRouter from "./routes/studyListRoute.js";
-dotenv.config();
+
+const envFile = `.env.${process.env.NODE_ENV || "development"}`;
+dotenv.config({ path: envFile });
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-app.use(cors());
+app.use(cors({ origin: process.env.CLIENT_URL || "http://localhost:5173" }));
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ limit: "10mb", extended: true }));
 app.get("/", (req, res) => {
@@ -30,5 +32,7 @@ app.use("/studies", studyListRouter);
 app.use("/studies", updateRouter);
 
 app.listen(PORT, () => {
-  console.log(`Server running on port: ${PORT}`);
+  console.log(
+    `[${process.env.NODE_ENV || "development"}] Server running on port: ${PORT}`,
+  );
 });
