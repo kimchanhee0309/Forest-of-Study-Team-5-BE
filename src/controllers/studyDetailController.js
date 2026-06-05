@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import dayjs from "dayjs";
 
 const prisma = new PrismaClient();
 
@@ -13,6 +14,7 @@ export const getStudyDetail = async (req, res) => {
       },
 
       include: {
+        studyEmojis: true,
         habits: {
           include: {
             habitLogs: {
@@ -31,7 +33,8 @@ export const getStudyDetail = async (req, res) => {
       });
     }
 
-    return res.status(200).json(study);
+    const elapsedDays = dayjs().diff(dayjs(study.createdAt), "day") + 1;
+    return res.status(200).json({ ...study, elapsedDays });
   } catch (error) {
     console.error(error);
 
