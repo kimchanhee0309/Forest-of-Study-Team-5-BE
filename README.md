@@ -104,7 +104,50 @@ ___
 
 # 파일 구조
 ```txt
-
+├── prisma/
+│   ├── migrations/
+│   └── schema.prisma    
+├── src/
+│   ├── configs/                
+│   │   └── prisma.js
+│   │
+│   ├── controllers/             
+│   │   ├── images/
+│   │   ├── icons/
+│   │   └── sticker/
+│   │
+│   ├── components/         
+│   │   ├── focusController.js
+│   │   ├── habitController.js
+│   │   ├── studies.js
+│   │   ├── studyController.js
+│   │   ├── studyDetailController.js
+│   │   ├── studyEmojiController.js
+│   │   └── updateController.js
+│   │
+│   ├── routes/
+│   │   ├── emojiRoute.js
+│   │   ├── focusRoute.js
+│   │   ├── habitRoute.js
+│   │   ├── studyDetailRoute.js
+│   │   ├── studyListRoute.js
+│   │   ├── studyRoute.js
+│   │   └── updateRoute.js 
+│   │
+│   ├── utils/
+│   │   ├── asyncHandler.js
+│   │   └── errors.js     
+│   │
+│   ├── validators/
+│   │   └── studyValidator.js       
+│   └── server.js
+├── .env
+├── .gitignore
+├── .prettierrc
+├── package-lock.json
+├── package.json
+├── prisma.config.ts
+└── README.md               
 ```
 
 ___
